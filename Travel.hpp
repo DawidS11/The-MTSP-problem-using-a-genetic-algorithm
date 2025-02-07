@@ -9,7 +9,7 @@ class Travel
 public:
     struct City
     {
-        City(int _number, int _x, int _y);
+        City(int number, int x, int y);
         double calculateDistance(const City& c) const;
         bool operator == (const City& c) const;
         bool operator = (const City& c);
@@ -19,18 +19,20 @@ public:
     };
     static const City startingPoint;
 
-    Travel(size_t _numCities, size_t _numSalesmen, const std::vector<City>& _cities, const std::vector<int>& _salesmen);
+    Travel(size_t numCities, size_t numSalesmen, const std::vector<City>& cities, const std::vector<int>& salesmen);
 
     double getDistance() const;
 
 private:
-    size_t numCities;
-    size_t numSalesmen;
-    std::vector<City> cities;
-    std::vector<int> salesmen;
-    double distance;
+    size_t mNumCities;
+    size_t mNumSalesmen;
+    std::vector<City> mCities;
+    std::vector<int> mSalesmen;
+    double mDistance;
 
     void calculateDistance();
+    void swapRandomCities();
+    void swapRandomSalesmen();
 };
 
 #endif

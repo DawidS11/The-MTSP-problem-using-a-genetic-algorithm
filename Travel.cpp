@@ -1,11 +1,12 @@
 #include "Travel.hpp"
 
 #include <cmath>
+#include <random>
 
 const Travel::City Travel::startingPoint(0, 500, 500);
 
-Travel::City::City(int _id, int _x, int _y)
-    : id(_id), x(_x), y(_y) 
+Travel::City::City(int id, int x, int y)
+    : id(id), x(x), y(y) 
 {}
 
 double Travel::City::calculateDistance(const City& c) const
@@ -27,34 +28,66 @@ bool Travel::City::operator = (const City& c)
     y = c.y;
 }
 
-Travel::Travel(size_t _numCities, size_t _numSalesmen, const std::vector<City>& _cities, const std::vector<int>& _salesmen)
-    : numCities(_numCities), numSalesmen(_numSalesmen), cities(_cities), salesmen(_salesmen)
+Travel::Travel(size_t numCities, size_t numSalesmen, const std::vector<City>& cities, const std::vector<int>& salesmen)
+    : mNumCities(numCities), mNumSalesmen(numSalesmen), mCities(cities), mSalesmen(salesmen)
 {}
 
 double Travel::getDistance() const
 {
-    return distance;
+    return mDistance;
 }
 
 void Travel::calculateDistance()
 {
     double totalDistance = 0.0;
     size_t idxSalesmen = 0, idxCities = 0;
-    for (int idxSalesmen = 0; idxSalesmen < numSalesmen; ++idxSalesmen)
+    for (int idxSalesmen = 0; idxSalesmen < mNumSalesmen; ++idxSalesmen)
     {
-        for (int i = 0; i < salesmen[idxSalesmen]; ++i)
+        for (int i = 0; i < mSalesmen[idxSalesmen]; ++i)
         {
             if (i == 0) // starting point
             {
-                totalDistance += cities[idxCities].calculateDistance(startingPoint);
+                totalDistance += mCities[idxCities].calculateDistance(startingPoint);
             }
             else
             {
-                totalDistance += cities[idxCities].calculateDistance(cities[idxCities-1]);
+                totalDistance += mCities[idxCities].calculateDistance(mCities[idxCities-1]);
             }
             ++idxCities;
         }
     }
 
-    distance = totalDistance;
+    mDistance = totalDistance;
+}
+
+void Travel::swapRandomCities()
+{
+    if (mNumCities <= 1)
+    {
+        return;
+    }
+
+    int posA = rand() % mNumCities;
+    int posB = rand() % mNumCities;
+    while (posA == posB)
+    {
+        posB = rand() % mNumCities;
+    }
+    std::swap(mCities.at(posA), mCities.at(posB));
+}
+
+void Travel::swapRandomSalesmen()
+{
+    if (mNumSalesmen <= 1)
+    {
+        return;
+    }
+
+    int posA = rand() % mNumSalesmen;
+    int posB = rand() % mNumSalesmen;
+    while (posA == posB)
+    {
+        posB = rand() % mNumSalesmen;
+    }
+    std::swap(mSalesmen.at(posA), mSalesmen.at(posB));
 }
