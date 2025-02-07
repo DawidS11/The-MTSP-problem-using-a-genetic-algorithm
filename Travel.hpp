@@ -10,7 +10,7 @@ public:
     struct City
     {
         City(int _number, int _x, int _y);
-        double calculateDistance(City& c) const;
+        double calculateDistance(const City& c) const;
         bool operator == (const City& c) const;
         bool operator = (const City& c);
 
@@ -19,12 +19,13 @@ public:
     };
     static const City startingPoint;
 
-    Travel(size_t _numCities, const std::vector<City>& _cities, const std::vector<int>& _salesmen);
+    Travel(size_t _numCities, size_t _numSalesmen, const std::vector<City>& _cities, const std::vector<int>& _salesmen);
 
     double getDistance() const;
 
 private:
     size_t numCities;
+    size_t numSalesmen;
     std::vector<City> cities;
     std::vector<int> salesmen;
     double distance;
