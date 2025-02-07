@@ -17,3 +17,7 @@ bool Travel::City::operator == (const City& c) const
 {
     return (id == c.id);
 }
+
+Travel::Travel(size_t _numCities, const std::vector<City>& _cities, const std::vector<int>& _salesmen)
+    : numCities(_numCities), cities(_cities), salesmen(_salesmen)
+{}
