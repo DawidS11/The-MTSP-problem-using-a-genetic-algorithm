@@ -37,6 +37,11 @@ double Travel::getDistance() const
     return mDistance;
 }
 
+double Travel::getFitness() const
+{
+    return mFitness;
+}
+
 void Travel::calculateDistance()
 {
     double totalDistance = 0.0;
@@ -58,6 +63,11 @@ void Travel::calculateDistance()
     }
 
     mDistance = totalDistance;
+}
+
+void Travel::calculateFitness()
+{
+    mFitness = (1.0 / mDistance) * 10000;
 }
 
 void Travel::swapRandomCities()

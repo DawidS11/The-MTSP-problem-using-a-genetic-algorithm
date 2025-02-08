@@ -22,6 +22,7 @@ public:
     Travel(size_t numCities, size_t numSalesmen, const std::vector<City>& cities, const std::vector<int>& salesmen);
 
     double getDistance() const;
+    double getFitness() const;
 
 private:
     size_t mNumCities;
@@ -29,11 +30,14 @@ private:
     std::vector<City> mCities;
     std::vector<int> mSalesmen;
     double mDistance;
+    double mFitness;
 
     void calculateDistance();
+    void calculateFitness();
     void swapRandomCities();
     void swapRandomSalesmen();
     void swap(const int numSwaps);
+    
 };
 
 #endif
