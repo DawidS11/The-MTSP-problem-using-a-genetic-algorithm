@@ -91,3 +91,12 @@ void Travel::swapRandomSalesmen()
     }
     std::swap(mSalesmen.at(posA), mSalesmen.at(posB));
 }
+
+void Travel::swap(const int numSwaps)
+{
+    for (int i = 0; i < numSwaps; ++i)
+    {
+        swapRandomCities();
+        swapRandomSalesmen();
+    }
+}

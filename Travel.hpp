@@ -33,6 +33,7 @@ private:
     void calculateDistance();
     void swapRandomCities();
     void swapRandomSalesmen();
+    void swap(const int numSwaps);
 };
 
 #endif
