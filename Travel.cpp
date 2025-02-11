@@ -110,3 +110,13 @@ void Travel::swap(const int numSwaps)
         swapRandomSalesmen();
     }
 }
+
+std::vector<Travel::City> Travel::getCities() const
+{
+    return mCities;
+}
+
+std::vector<int> Travel::getSalesmen() const
+{
+    return mSalesmen;
+}
