@@ -20,9 +20,11 @@ public:
     static const City startingPoint;
 
     Travel(size_t numCities, size_t numSalesmen, const std::vector<City>& cities, const std::vector<int>& salesmen);
+    Travel();
 
     double getDistance() const;
     double getFitness() const;
+    size_t getNumCities() const;
     std::vector<City> getCities() const;
     std::vector<int> getSalesmen() const;
 

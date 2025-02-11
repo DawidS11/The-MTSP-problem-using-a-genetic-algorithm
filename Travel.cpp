@@ -32,6 +32,10 @@ Travel::Travel(size_t numCities, size_t numSalesmen, const std::vector<City>& ci
     : mNumCities(numCities), mNumSalesmen(numSalesmen), mCities(cities), mSalesmen(salesmen)
 {}
 
+Travel::Travel()
+    : mNumCities(0), mNumSalesmen(0), mCities(std::vector<City>()), mSalesmen(std::vector<int>())
+{}
+
 double Travel::getDistance() const
 {
     return mDistance;
@@ -40,6 +44,11 @@ double Travel::getDistance() const
 double Travel::getFitness() const
 {
     return mFitness;
+}
+
+size_t Travel::getNumCities() const
+{
+    return mNumCities;
 }
 
 void Travel::calculateDistance()
