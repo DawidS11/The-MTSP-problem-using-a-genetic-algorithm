@@ -23,6 +23,8 @@ public:
 
     double getDistance() const;
     double getFitness() const;
+    std::vector<City> getCities() const;
+    std::vector<int> getSalesmen() const;
 
 private:
     size_t mNumCities;
@@ -37,8 +39,6 @@ private:
     void swapRandomCities();
     void swapRandomSalesmen();
     void swap(const int numSwaps);
-    std::vector<City> getCities() const;
-    std::vector<int> getSalesmen() const;
 };
 
 #endif
