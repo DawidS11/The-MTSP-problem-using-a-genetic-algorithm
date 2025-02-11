@@ -27,6 +27,8 @@ public:
     size_t getNumCities() const;
     std::vector<City> getCities() const;
     std::vector<int> getSalesmen() const;
+    void setCities(const std::vector<City>& cities);
+    void setSalesmen(const std::vector<int>& salesmen);
 
 private:
     size_t mNumCities;

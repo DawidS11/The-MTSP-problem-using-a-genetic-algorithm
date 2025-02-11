@@ -51,6 +51,26 @@ size_t Travel::getNumCities() const
     return mNumCities;
 }
 
+std::vector<Travel::City> Travel::getCities() const
+{
+    return mCities;
+}
+
+std::vector<int> Travel::getSalesmen() const
+{
+    return mSalesmen;
+}
+
+void Travel::setCities(const std::vector<Travel::City>& cities)
+{
+    mCities = cities;
+}
+
+void Travel::setSalesmen(const std::vector<int>& salesmen)
+{
+    mSalesmen = salesmen;
+}
+
 void Travel::calculateDistance()
 {
     double totalDistance = 0.0;
@@ -118,14 +138,4 @@ void Travel::swap(const int numSwaps)
         swapRandomCities();
         swapRandomSalesmen();
     }
-}
-
-std::vector<Travel::City> Travel::getCities() const
-{
-    return mCities;
-}
-
-std::vector<int> Travel::getSalesmen() const
-{
-    return mSalesmen;
 }
