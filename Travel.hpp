@@ -29,6 +29,8 @@ public:
     std::vector<int> getSalesmen() const;
     void setCities(const std::vector<City>& cities);
     void setSalesmen(const std::vector<int>& salesmen);
+    void calculateDistance();
+    void calculateFitness();
 
 private:
     size_t mNumCities;
@@ -38,8 +40,6 @@ private:
     double mDistance;
     double mFitness;
 
-    void calculateDistance();
-    void calculateFitness();
     void swapRandomCities();
     void swapRandomSalesmen();
     void swap(const int numSwaps);
