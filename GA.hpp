@@ -8,6 +8,7 @@ class GA
 {
 public:
     GA(const std::vector<Travel>& travels, size_t iterations);
+    Travel& crossoverCarterAndRagsdale2006(Travel& t1, Travel& t2);
 
 private:
     std::vector<Travel> mTravels;
