@@ -25,6 +25,7 @@ public:
     double getDistance() const;
     double getFitness() const;
     size_t getNumCities() const;
+    size_t getNumSalesmen() const;
     std::vector<City> getCities() const;
     std::vector<int> getSalesmen() const;
     void setCities(const std::vector<City>& cities);

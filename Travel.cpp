@@ -51,6 +51,11 @@ size_t Travel::getNumCities() const
     return mNumCities;
 }
 
+size_t Travel::getNumSalesmen() const
+{
+    return mNumSalesmen;
+}
+
 std::vector<Travel::City> Travel::getCities() const
 {
     return mCities;
