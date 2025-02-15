@@ -3,11 +3,11 @@ CXXFLAGS = -std=c++11 -Wall -Wextra
 
 TARGET = app
 
-SRC = main.cpp GA.cpp Travel.cpp
+SRC = main.cpp GA.cpp Travel.cpp Population.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
-DEPS = GA.hpp Travel.hpp
+DEPS = GA.hpp Travel.hpp Population.hpp
 
 $(TARGET): $(OBJ)
 	$(CXX) $(CXXFLAGS) $(OBJ) -o $(TARGET)
