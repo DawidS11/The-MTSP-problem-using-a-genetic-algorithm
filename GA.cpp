@@ -60,3 +60,37 @@ Travel& GA::crossoverCarterAndRagsdale2006(Travel& t1, Travel& t2)
 
     return child;
 }
+
+Travel& GA::standardCrossover(Travel& t1, Travel& t2)
+{
+    std::vector<Travel::City> parent1Cities = t1.getCities();
+    std::vector<Travel::City> parent2Cities = t2.getCities();
+    std::vector<int> parent1Salesmen = t1.getSalesmen();
+    std::vector<int> parent2Salesmen = t2.getSalesmen();
+
+    Travel child;
+    size_t numCities = t1.getNumCities();
+
+    size_t r = rand() % (numCities - 1) + 1;
+    std::vector<Travel::City> childCities(parent1Cities.begin(), parent1Cities.begin() + r);
+    
+    size_t idx = 0;
+    while (childCities.size() < numCities)
+    {
+        auto it = std::find(childCities.begin(), childCities.end(), parent2Cities[idx]);
+        if(it == childCities.end())
+        {
+            childCities.push_back(parent2Cities[idx]);
+        }
+        ++idx;
+    }
+
+    std::vector<int> childSalesmen = rand() % 2 ? parent1Salesmen : parent2Salesmen;
+
+    child.setCities(childCities);
+    child.setSalesmen(childSalesmen);
+    child.calculateFitness();
+    child.calculateDistance();
+
+    return child;
+}
