@@ -9,6 +9,7 @@ class Population
 public:
     Population(const std::vector<Travel::City> cities, size_t populationSize, size_t numCities, size_t numSalesmen);
     Population();
+    Population(Population& p);
     
     std::vector<Travel> getTravels() const;
     size_t getSize() const;

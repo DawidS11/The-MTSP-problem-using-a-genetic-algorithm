@@ -8,19 +8,19 @@
 class GA
 {
 public:
-    GA(const std::vector<Travel>& travels, size_t iterations);
+    GA(Population& population, size_t iterations);
+    void optimization(Population& p, int crossover);
+
+private:
+    Population mPopulation;
+    size_t mIterations;
+
     Travel crossoverCarterAndRagsdale2006(Travel& t1, Travel& t2);
     Travel crossoverStandard(Travel& t1, Travel& t2);
     Travel crossoverTCX(Travel& t1, Travel& t2);
-
-private:
-    std::vector<Travel> mTravels;
-    size_t mIterations;
-
     std::array<Travel, 2> selectParents(const Population& p);
     void mutation(Population& p, Travel& t);
     void evolution(Population& p, int crossover);
-    void optimization(Population& p, int crossover);
 };
 
 #endif

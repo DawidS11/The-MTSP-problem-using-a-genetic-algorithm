@@ -11,7 +11,7 @@ class Travel
 public:
     struct City
     {
-        City(int number, int x, int y);
+        City(uint8_t id, int x, int y);
         double calculateDistance(const City& c) const;
         bool operator == (const City& c) const;
         //bool operator = (const City& c);

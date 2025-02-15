@@ -36,6 +36,14 @@ Population::Population()
     : mNumMutation(0), mProbMutation(20) 
 {}
 
+Population::Population(Population& p)
+{
+    mPopulationSize = p.mPopulationSize;
+    travels = p.travels;
+    mNumMutation = p.mNumMutation;
+    mProbMutation = p.mProbMutation;
+}
+
 std::vector<Travel> Population::getTravels() const
 { 
     return travels;

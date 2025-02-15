@@ -1,8 +1,8 @@
 #include "GA.hpp"
 #include <random>
 
-GA::GA(const std::vector<Travel>& travels, size_t iterations)
-    : mTravels(travels), mIterations(iterations)
+GA::GA(Population& population, size_t iterations)
+    : mPopulation(population), mIterations(iterations)
 {}
 
 Travel GA::crossoverCarterAndRagsdale2006(Travel& t1, Travel& t2)
@@ -229,8 +229,6 @@ Travel GA::crossoverTCX(Travel& t1, Travel& t2)
     child.calculateFitness();
     child.calculateDistance();
 
-    mIterations++; // tmp
-
     return child;
 }
 
@@ -335,7 +333,7 @@ void GA::optimization(Population& p, int crossover)
         p.getBestDistance() << std::endl;
     std::cout << "============================================\n";
 
-    for(int i = 0; i < 1000; i++)
+    for(size_t i = 0; i < mIterations; i++)
     {
         evolution(p, crossover);
         if(i == 99 || i == 499 || i == 999)
