@@ -18,8 +18,8 @@ public:
     int getNumMutation();
     void incNumMutation();
     void delNumMutation();
-    void setPmutation();
-    int getPmutation();
+    void setProbMutation();
+    int getProbMutation();
     Population& operator = (Population& p);
 
 private:

@@ -77,15 +77,15 @@ int Population::getNumMutation()
 
 void Population::incNumMutation()
 {
-    mNumMutation++; setPmutation();
+    mNumMutation++; setProbMutation();
 }
 
 void Population::delNumMutation()
 {
-    mNumMutation = 0; setPmutation();
+    mNumMutation = 0; setProbMutation();
 }
 
-void Population::setPmutation()
+void Population::setProbMutation()
 { 
     if (mNumMutation == 0)
         mProbMutation = 20;
@@ -99,7 +99,7 @@ void Population::setPmutation()
         mProbMutation = 5;
 }
 
-int Population:: getPmutation()
+int Population:: getProbMutation()
 { 
     return mProbMutation;
 }
