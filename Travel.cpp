@@ -21,12 +21,12 @@ bool Travel::City::operator == (const City& c) const
     return (id == c.id);
 }
 
-bool Travel::City::operator = (const City& c)
+/*bool Travel::City::operator = (const City& c)
 {
     id == c.id;
     x = c.x;
     y = c.y;
-}
+}*/
 
 Travel::Travel(size_t numCities, size_t numSalesmen, const std::vector<City>& cities, const std::vector<int>& salesmen)
     : mNumCities(numCities), mNumSalesmen(numSalesmen), mCities(cities), mSalesmen(salesmen)
@@ -79,8 +79,8 @@ void Travel::setSalesmen(const std::vector<int>& salesmen)
 void Travel::calculateDistance()
 {
     double totalDistance = 0.0;
-    size_t idxSalesmen = 0, idxCities = 0;
-    for (int idxSalesmen = 0; idxSalesmen < mNumSalesmen; ++idxSalesmen)
+    size_t idxCities = 0;
+    for (size_t idxSalesmen = 0; idxSalesmen < mNumSalesmen; ++idxSalesmen)
     {
         for (int i = 0; i < mSalesmen[idxSalesmen]; ++i)
         {
@@ -136,9 +136,9 @@ void Travel::swapRandomSalesmen()
     std::swap(mSalesmen.at(posA), mSalesmen.at(posB));
 }
 
-void Travel::swap(const int numSwaps)
+void Travel::swap(const size_t numSwaps)
 {
-    for (int i = 0; i < numSwaps; ++i)
+    for (size_t i = 0; i < numSwaps; ++i)
     {
         swapRandomCities();
         swapRandomSalesmen();

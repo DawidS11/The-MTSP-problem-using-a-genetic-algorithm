@@ -12,7 +12,7 @@ public:
         City(int number, int x, int y);
         double calculateDistance(const City& c) const;
         bool operator == (const City& c) const;
-        bool operator = (const City& c);
+        //bool operator = (const City& c);
 
         uint8_t id;
         int x, y;
@@ -43,7 +43,7 @@ private:
 
     void swapRandomCities();
     void swapRandomSalesmen();
-    void swap(const int numSwaps);
+    void swap(const size_t numSwaps);
 };
 
 #endif

@@ -14,7 +14,7 @@ GA::GA(const std::vector<Travel>& travels, size_t iterations)
     : mTravels(travels), mIterations(iterations)
 {}
 
-Travel& GA::crossoverCarterAndRagsdale2006(Travel& t1, Travel& t2)
+/*Travel& GA::crossoverCarterAndRagsdale2006(Travel& t1, Travel& t2)
 {
     std::vector<Travel::City> momsCities = t1.getCities();
     std::vector<Travel::City> dadsCities = t2.getCities();
@@ -71,7 +71,7 @@ Travel& GA::crossoverCarterAndRagsdale2006(Travel& t1, Travel& t2)
     return child;
 }
 
-Travel& GA::crossoverStandard(Travel& t1, Travel& t2)
+Travel GA::crossoverStandard(Travel& t1, Travel& t2)
 {
     std::vector<Travel::City> momsCities = t1.getCities();
     std::vector<Travel::City> dadsCities = t2.getCities();
@@ -103,9 +103,9 @@ Travel& GA::crossoverStandard(Travel& t1, Travel& t2)
     child.calculateDistance();
 
     return child;
-}
+}*/
 
-Travel GA::crossoverTCX(Travel& t1, Travel& t2)
+Travel* GA::crossoverTCX(Travel& t1, Travel& t2)
 {
     // Step 1: Initialise a pair of chromosomes as parents.
     std::vector<Travel::City> momsCities = t1.getCities();
@@ -113,8 +113,8 @@ Travel GA::crossoverTCX(Travel& t1, Travel& t2)
     std::vector<int> momsSalesmen = t1.getSalesmen();
     std::vector<int> dadsSalesmen = t2.getSalesmen();
 
-    Travel child;
-    size_t numCities = t1.getNumCities();
+    Travel* child = new Travel;
+    //size_t numCities = t1.getNumCities();
     size_t numSalesmen = t1.getNumSalesmen();
     
     std::vector<Travel::City> childCities;
@@ -126,7 +126,7 @@ Travel GA::crossoverTCX(Travel& t1, Travel& t2)
     // Step 2: Randomly select a gene segment for each salesman.
     int segmentBegin[numSalesmen], segmentEnd[numSalesmen], sumNumCities = 0;
     std::vector<Travel::City> momsPool;
-    for (int i = 0; i < numSalesmen; ++i)
+    for (size_t i = 0; i < numSalesmen; ++i)
     {
        segmentBegin[i] = getRandomInt(sumNumCities, sumNumCities + momsSalesmen[i]);
        segmentEnd[i] = getRandomInt(segmentBegin[i], sumNumCities + momsSalesmen[i]);
@@ -139,12 +139,12 @@ Travel GA::crossoverTCX(Travel& t1, Travel& t2)
     // Step 4: Add genes for each salesman.
     // Step 5 : Construct the Child’s two-part chromosome.
     sumNumCities = 0;
-    for (int i = 0; i < numSalesmen; ++i)
+    for (size_t i = 0; i < numSalesmen; ++i)
     {
         childCities.insert(childCities.begin(), momsPool.begin() + segmentBegin[i], momsPool.begin() + segmentEnd[i]);
         for (auto it = dadsCities.begin() + sumNumCities; it != dadsCities.begin() + sumNumCities + dadsSalesmen[i]; ++it)
         {
-            if (std::find(momsPool.begin(), momsPool.end(), it) == momsPool.end())
+            if (std::find(momsPool.begin(), momsPool.end(), *it) == momsPool.end())
             {
                 childCities.push_back(*it);
                 ++childSalesmen[i];
@@ -235,10 +235,12 @@ Travel GA::crossoverTCX(Travel& t1, Travel& t2)
         childSalesmen.push_back(segment[i] + segment2[i]);
     }*/
 
-    child.setCities(childCities);
-    child.setSalesmen(childSalesmen);
-    child.calculateFitness();
-    child.calculateDistance();
+    child->setCities(childCities);
+    child->setSalesmen(childSalesmen);
+    child->calculateFitness();
+    child->calculateDistance();
+
+    mIterations++; // tmp
 
     return child;
 }
