@@ -8,8 +8,8 @@ class GA
 {
 public:
     GA(const std::vector<Travel>& travels, size_t iterations);
-    //Travel& crossoverCarterAndRagsdale2006(Travel& t1, Travel& t2);
-    //Travel& crossoverStandard(Travel& t1, Travel& t2);
+    Travel* crossoverCarterAndRagsdale2006(Travel& t1, Travel& t2);
+    Travel* crossoverStandard(Travel& t1, Travel& t2);
     Travel* crossoverTCX(Travel& t1, Travel& t2);
 
 private:

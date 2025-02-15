@@ -5,14 +5,14 @@ GA::GA(const std::vector<Travel>& travels, size_t iterations)
     : mTravels(travels), mIterations(iterations)
 {}
 
-/*Travel& GA::crossoverCarterAndRagsdale2006(Travel& t1, Travel& t2)
+Travel* GA::crossoverCarterAndRagsdale2006(Travel& t1, Travel& t2)
 {
     std::vector<Travel::City> momsCities = t1.getCities();
     std::vector<Travel::City> dadsCities = t2.getCities();
     std::vector<int> momsSalesmen = t1.getSalesmen();
     std::vector<int> dadsSalesmen = t2.getSalesmen();
 
-    Travel child;
+    Travel* child = new Travel();
     size_t numCities = t1.getNumCities();
     size_t numSalesmen = t1.getNumSalesmen();
 
@@ -54,22 +54,22 @@ GA::GA(const std::vector<Travel>& travels, size_t iterations)
         childSalesmen.push_back(momsSalesmen[i]);
     }
 
-    child.setCities(childCities);
-    child.setSalesmen(childSalesmen);
-    child.calculateFitness();
-    child.calculateDistance();
+    child->setCities(childCities);
+    child->setSalesmen(childSalesmen);
+    child->calculateFitness();
+    child->calculateDistance();
 
     return child;
 }
 
-Travel GA::crossoverStandard(Travel& t1, Travel& t2)
+Travel* GA::crossoverStandard(Travel& t1, Travel& t2)
 {
     std::vector<Travel::City> momsCities = t1.getCities();
     std::vector<Travel::City> dadsCities = t2.getCities();
     std::vector<int> momsSalesmen = t1.getSalesmen();
     std::vector<int> dadsSalesmen = t2.getSalesmen();
 
-    Travel child;
+    Travel* child = new Travel();
     size_t numCities = t1.getNumCities();
 
     size_t r = rand() % (numCities - 1) + 1;
@@ -88,13 +88,13 @@ Travel GA::crossoverStandard(Travel& t1, Travel& t2)
 
     std::vector<int> childSalesmen = rand() % 2 ? momsSalesmen : dadsSalesmen;
 
-    child.setCities(childCities);
-    child.setSalesmen(childSalesmen);
-    child.calculateFitness();
-    child.calculateDistance();
+    child->setCities(childCities);
+    child->setSalesmen(childSalesmen);
+    child->calculateFitness();
+    child->calculateDistance();
 
     return child;
-}*/
+}
 
 Travel* GA::crossoverTCX(Travel& t1, Travel& t2)
 {
@@ -143,8 +143,6 @@ Travel* GA::crossoverTCX(Travel& t1, Travel& t2)
         }
         sumNumCities += dadsSalesmen[i];
     }
-
-
 
     // ---------------------
     /*
