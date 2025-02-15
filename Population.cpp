@@ -14,7 +14,7 @@ Population::Population(const std::vector<Travel::City> cities, size_t population
     {
         int remainingCities = numCities;
         int remainingSalesmen = numSalesmen;
-        for (int salesmanIndex = 0; salesmanIndex < numSalesmen - 1; ++salesmanIndex)
+        for (size_t salesmanIndex = 0; salesmanIndex < numSalesmen - 1; ++salesmanIndex)
         {
             int num = 1 + std::rand() % (remainingCities - (remainingSalesmen - 1)); // Random number in [1, max_value]
             salesmen.push_back(num);
@@ -24,9 +24,7 @@ Population::Population(const std::vector<Travel::City> cities, size_t population
         salesmen.push_back(numCities - remainingCities);
         std::shuffle(salesmen.begin(), salesmen.end(), gen);
 
-        Travel travel;
-        travel.setCities(cities);
-        travel.setSalesmen(salesmen);
+        Travel travel(numCities, numSalesmen, cities, salesmen);
         travel.swap(swapsNumber);
         travel.calculateDistance();
         travel.calculateFitness();
