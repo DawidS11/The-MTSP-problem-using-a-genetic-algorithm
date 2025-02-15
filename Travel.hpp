@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 
+int getRandomInt(const int a, const int b);
+
 class Travel
 {
 public:

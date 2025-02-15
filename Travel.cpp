@@ -5,6 +5,15 @@
 
 const Travel::City Travel::startingPoint(0, 500, 500);
 
+int getRandomInt(const int a, const int b)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dist(a, b);
+
+    return dist(gen);
+}
+
 Travel::City::City(int id, int x, int y)
     : id(id), x(x), y(y) 
 {}

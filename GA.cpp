@@ -1,15 +1,6 @@
 #include "GA.hpp"
 #include <random>
 
-int getRandomInt(int a, int b)
-{
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> dist(a, b);
-
-    return dist(gen);
-}
-
 GA::GA(const std::vector<Travel>& travels, size_t iterations)
     : mTravels(travels), mIterations(iterations)
 {}
