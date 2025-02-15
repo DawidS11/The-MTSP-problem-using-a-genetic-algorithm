@@ -4,8 +4,6 @@
 
 int main()
 {
-    std::cout << "Hello world!" << std::endl;
-
     size_t populationSize;
     size_t numCities;
     size_t numSalesmen;
@@ -18,7 +16,7 @@ int main()
     }
 
     std::vector<Travel::City> cities;
-    uint8_t id;
+    int id;
     int x, y;
     while(!file.eof())
     {

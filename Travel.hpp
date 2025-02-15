@@ -11,12 +11,12 @@ class Travel
 public:
     struct City
     {
-        City(uint8_t id, int x, int y);
+        City(int id, int x, int y);
         double calculateDistance(const City& c) const;
         bool operator == (const City& c) const;
         //bool operator = (const City& c);
 
-        uint8_t id;
+        int id;
         int x, y;
     };
     static const City startingPoint;

@@ -14,7 +14,7 @@ int getRandomInt(const int a, const int b)
     return dist(gen);
 }
 
-Travel::City::City(uint8_t id, int x, int y)
+Travel::City::City(int id, int x, int y)
     : id(id), x(x), y(y) 
 {}
 
