@@ -328,3 +328,22 @@ void GA::evolution(Population& p, int crossover)
     travels[r2].calculateFitness();
     p.setTravels(travels);
 }
+
+void GA::optimization(Population& p, int crossover)
+{
+    std::cout << "Starting shortest distance: " <<
+        p.getBestDistance() << std::endl;
+    std::cout << "============================================\n";
+
+    for(int i = 0; i < 1000; i++)
+    {
+        evolution(p, crossover);
+        if(i == 99 || i == 499 || i == 999)
+        {
+            std::cout << "\nShortest distance after " << i + 1 << " iterations: " << p.getBestDistance() << std::endl;
+            p.delNumMutation();
+        }
+    }
+
+    std::cout << "\n============================================" << std::endl;
+}
