@@ -5,14 +5,14 @@ GA::GA(const std::vector<Travel>& travels, size_t iterations)
     : mTravels(travels), mIterations(iterations)
 {}
 
-Travel* GA::crossoverCarterAndRagsdale2006(Travel& t1, Travel& t2)
+Travel GA::crossoverCarterAndRagsdale2006(Travel& t1, Travel& t2)
 {
     std::vector<Travel::City> momsCities = t1.getCities();
     std::vector<Travel::City> dadsCities = t2.getCities();
     std::vector<int> momsSalesmen = t1.getSalesmen();
     std::vector<int> dadsSalesmen = t2.getSalesmen();
 
-    Travel* child = new Travel();
+    Travel child;
     size_t numCities = t1.getNumCities();
     size_t numSalesmen = t1.getNumSalesmen();
 
@@ -54,22 +54,22 @@ Travel* GA::crossoverCarterAndRagsdale2006(Travel& t1, Travel& t2)
         childSalesmen.push_back(momsSalesmen[i]);
     }
 
-    child->setCities(childCities);
-    child->setSalesmen(childSalesmen);
-    child->calculateFitness();
-    child->calculateDistance();
+    child.setCities(childCities);
+    child.setSalesmen(childSalesmen);
+    child.calculateFitness();
+    child.calculateDistance();
 
     return child;
 }
 
-Travel* GA::crossoverStandard(Travel& t1, Travel& t2)
+Travel GA::crossoverStandard(Travel& t1, Travel& t2)
 {
     std::vector<Travel::City> momsCities = t1.getCities();
     std::vector<Travel::City> dadsCities = t2.getCities();
     std::vector<int> momsSalesmen = t1.getSalesmen();
     std::vector<int> dadsSalesmen = t2.getSalesmen();
 
-    Travel* child = new Travel();
+    Travel child;
     size_t numCities = t1.getNumCities();
 
     size_t r = rand() % (numCities - 1) + 1;
@@ -88,15 +88,15 @@ Travel* GA::crossoverStandard(Travel& t1, Travel& t2)
 
     std::vector<int> childSalesmen = rand() % 2 ? momsSalesmen : dadsSalesmen;
 
-    child->setCities(childCities);
-    child->setSalesmen(childSalesmen);
-    child->calculateFitness();
-    child->calculateDistance();
+    child.setCities(childCities);
+    child.setSalesmen(childSalesmen);
+    child.calculateFitness();
+    child.calculateDistance();
 
     return child;
 }
 
-Travel* GA::crossoverTCX(Travel& t1, Travel& t2)
+Travel GA::crossoverTCX(Travel& t1, Travel& t2)
 {
     // Step 1: Initialise a pair of chromosomes as parents.
     std::vector<Travel::City> momsCities = t1.getCities();
@@ -104,7 +104,7 @@ Travel* GA::crossoverTCX(Travel& t1, Travel& t2)
     std::vector<int> momsSalesmen = t1.getSalesmen();
     std::vector<int> dadsSalesmen = t2.getSalesmen();
 
-    Travel* child = new Travel;
+    Travel child;
     //size_t numCities = t1.getNumCities();
     size_t numSalesmen = t1.getNumSalesmen();
     
@@ -224,19 +224,19 @@ Travel* GA::crossoverTCX(Travel& t1, Travel& t2)
         childSalesmen.push_back(segment[i] + segment2[i]);
     }*/
 
-    child->setCities(childCities);
-    child->setSalesmen(childSalesmen);
-    child->calculateFitness();
-    child->calculateDistance();
+    child.setCities(childCities);
+    child.setSalesmen(childSalesmen);
+    child.calculateFitness();
+    child.calculateDistance();
 
     mIterations++; // tmp
 
     return child;
 }
 
-std::vector<Travel> GA::selectParents(const Population& p)
+std::array<Travel, 2> GA::selectParents(const Population& p)
 {
-    std::vector<Travel> parents;
+    std::array<Travel, 2> parents;
     std::vector<double> probability;
     std::vector<Travel> travels = p.getTravels();
 
@@ -263,7 +263,7 @@ std::vector<Travel> GA::selectParents(const Population& p)
         offset += probability[index];
         ++index;
     }
-    parents.push_back(travels[index]);
+    parents[0] = travels[index];
     index2 = 0;
     offset = 0.0;
     while(offset > r2 && index2 < p.getSize() - 1)
@@ -282,7 +282,7 @@ std::vector<Travel> GA::selectParents(const Population& p)
             ++index2;
         }
     }
-    parents.push_back(travels[index2]);
+    parents[1] = travels[index2];
 
     return parents;
 }
@@ -295,4 +295,36 @@ void GA::mutation(Population& p, Travel& t) // change to probMutation
         t.swapRandomCities();
         t.swapRandomSalesmen();
     }
+}
+
+void GA::evolution(Population& p, int crossover)
+{        
+    std::array<Travel, 2> parents(selectParents(p));
+    std::vector<Travel> travels(p.getTravels());
+    size_t populationSize = p.getSize();
+    int r = rand() % populationSize;
+    int r2 = rand() % populationSize;
+    while(r == r2)
+    {
+        r2 = rand() % populationSize;
+    }
+    
+    if(crossover == 0)
+    {
+        travels[r] = crossoverTCX(parents[0], parents[1]);
+        travels[r2] = crossoverTCX(parents[0], parents[1]);
+    }
+    else
+    {
+        travels[r] = crossoverStandard(parents[0], parents[1]);
+        travels[r2] = crossoverStandard(parents[0], parents[1]);
+    }
+
+    mutation(p, travels[r]);
+    mutation(p, travels[r2]);
+    travels[r].calculateDistance();
+    travels[r].calculateFitness();
+    travels[r2].calculateDistance();
+    travels[r2].calculateFitness();
+    p.setTravels(travels);
 }
