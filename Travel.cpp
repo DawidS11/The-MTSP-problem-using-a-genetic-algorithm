@@ -113,6 +113,25 @@ void Travel::calculateFitness()
     mFitness = (1.0 / mDistance) * 10000;
 }
 
+void Travel::swap(const size_t numSwaps)
+{
+    for (size_t i = 0; i < numSwaps; ++i)
+    {
+        swapRandomCities();
+        swapRandomSalesmen();
+    }
+}
+
+bool Travel::operator < (const Travel& t) const
+{
+    return mFitness> t.mFitness;
+}
+
+bool Travel::operator > (const Travel& t) const
+{
+    return mFitness > t.mFitness;
+}
+
 void Travel::swapRandomCities()
 {
     if (mNumCities <= 1)
@@ -143,13 +162,4 @@ void Travel::swapRandomSalesmen()
         posB = rand() % mNumSalesmen;
     }
     std::swap(mSalesmen.at(posA), mSalesmen.at(posB));
-}
-
-void Travel::swap(const size_t numSwaps)
-{
-    for (size_t i = 0; i < numSwaps; ++i)
-    {
-        swapRandomCities();
-        swapRandomSalesmen();
-    }
 }

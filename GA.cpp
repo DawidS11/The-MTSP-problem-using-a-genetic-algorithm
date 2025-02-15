@@ -147,7 +147,7 @@ Travel* GA::crossoverTCX(Travel& t1, Travel& t2)
     // ---------------------
     /*
     int segSum = 0;
-    for(i = 0; i < numSalesmen; ++i)
+    for (i = 0; i < numSalesmen; ++i)
     {
         segment[i] = rand() % momsSalesmen[i] + 1;
         segSum += segment[i];
@@ -161,7 +161,7 @@ Travel* GA::crossoverTCX(Travel& t1, Travel& t2)
         if(momsSalesmen[i] > segment[i])
         {
             starting[i] = rand() % (momsSalesmen[i] - segment[i]) + index;
-            for(k = starting[i]; k < starting[i] + segment[i]; ++k)
+            for (k = starting[i]; k < starting[i] + segment[i]; ++k)
             {
                 savedGenesPool.push_back(momsCities[k]);
                 ++totalSavedGenes;
@@ -169,7 +169,7 @@ Travel* GA::crossoverTCX(Travel& t1, Travel& t2)
         }
         else
         {
-            for(k = index; k < index + segment[i]; ++k)
+            for (k = index; k < index + segment[i]; ++k)
             {
                 savedGenesPool.push_back(momsCities[k]); 
                 ++totalSavedGenes;
@@ -180,16 +180,16 @@ Travel* GA::crossoverTCX(Travel& t1, Travel& t2)
 
     totalUnsavedGenes = numCities - totalSavedGenes;
     auto it = savedGenesPool.begin();
-    for(i = 0; i < numCities; ++i)
+    for (i = 0; i < numCities; ++i)
     {                                              
         it = std::find(savedGenesPool.begin(), savedGenesPool.end(), momsCities[i]);
         if(it == savedGenesPool.end()) 
             unsavedGenesPool.push_back(momsCities[i]);
     }
 
-    for(k = 0; k < numCities; ++k)
+    for (k = 0; k < numCities; ++k)
     {
-        for(i = 0; i < totalUnsavedGenes; ++i {
+        for (i = 0; i < totalUnsavedGenes; ++i {
             if(unsavedGenesPool[i] == dadsCities[k]) {
                 unsavedGenesPool2.push_back(unsavedGenesPool[i]);
                 break;
@@ -198,7 +198,7 @@ Travel* GA::crossoverTCX(Travel& t1, Travel& t2)
     }
     k = 0;
     segSum = 0;
-    for(i = 0; i < numSalesmen; ++i)
+    for (i = 0; i < numSalesmen; ++i)
     {
         if(i != numSalesmen - 1) {
             if(segSum == totalUnsavedGenes)
@@ -213,12 +213,12 @@ Travel* GA::crossoverTCX(Travel& t1, Travel& t2)
     index = 0;
     index2 = 0;
 
-    for(i = 0; i < numSalesmen; ++i)
+    for (i = 0; i < numSalesmen; ++i)
     {
-        for(k = index; k < index + segment[i]; ++k) 
+        for (k = index; k < index + segment[i]; ++k) 
             childCities.push_back(savedGenesPool[k]);
         index += segment[i];
-        for(k = index2; k < index2 + segment2[i]; ++k)
+        for (k = index2; k < index2 + segment2[i]; ++k)
             childCities.push_back(unsavedGenesPool2[k]);
         index2 += segment2[i];
         childSalesmen.push_back(segment[i] + segment2[i]);
@@ -233,3 +233,56 @@ Travel* GA::crossoverTCX(Travel& t1, Travel& t2)
 
     return child;
 }
+
+std::vector<Travel> GA::selectParents(const Population& p)
+{
+    std::vector<Travel> parents;
+    std::vector<double> probability;
+    std::vector<Travel> travels = p.getTravels();
+
+    // Sort so the best ones are at the beginning.
+    std::sort(travels.begin(), travels.end());
+
+    double totalFitness = 0.0;
+    double offset = 0.0;
+    size_t index = 0, index2 = 0;
+    for (const Travel& travel : travels)
+    {
+        totalFitness += travel.getFitness();
+    }
+    for (const Travel& travel : travels)
+    {
+        probability.push_back(travel.getFitness() / totalFitness);
+    }
+
+    double r = (double)rand() / RAND_MAX;
+    double r2 = 1 - r;
+    index = 0;
+    while(offset > r && index < p.getSize() - 1)
+    {
+        offset += probability[index];
+        ++index;
+    }
+    parents.push_back(travels[index]);
+    index2 = 0;
+    offset = 0.0;
+    while(offset > r2 && index2 < p.getSize() - 1)
+    {
+        offset += probability[index2];
+        ++index2;
+    }
+    if(index == index2)
+    {
+        if(index2 > 0)
+        {
+            --index2;
+        }
+        else
+        {
+            ++index2;
+        }
+    }
+    parents.push_back(travels[index2]);
+
+    return parents;
+} 

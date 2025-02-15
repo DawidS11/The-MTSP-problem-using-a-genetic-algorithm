@@ -34,6 +34,10 @@ public:
     void setSalesmen(const std::vector<int>& salesmen);
     void calculateDistance();
     void calculateFitness();
+    void swap(const size_t numSwaps);
+
+    bool operator<(const Travel& t) const;
+    bool operator>(const Travel& t) const;
 
 private:
     size_t mNumCities;
@@ -45,7 +49,6 @@ private:
 
     void swapRandomCities();
     void swapRandomSalesmen();
-    void swap(const size_t numSwaps);
 };
 
 #endif

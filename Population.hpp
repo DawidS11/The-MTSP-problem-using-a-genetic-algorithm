@@ -10,8 +10,8 @@ public:
     Population(const std::vector<Travel::City> cities, size_t populationSize, size_t numCities, size_t numSalesmen);
     Population();
     
-    std::vector<Travel> getTravels();
-    int getSize();
+    std::vector<Travel> getTravels() const;
+    size_t getSize() const;
     double getBestDistance();
     Travel getBestTravel();
     void setTravels(const std::vector<Travel> travels);

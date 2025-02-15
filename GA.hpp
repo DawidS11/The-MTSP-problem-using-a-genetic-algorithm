@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "Travel.hpp"
+#include "Population.hpp"
 
 class GA
 {
@@ -15,6 +16,8 @@ public:
 private:
     std::vector<Travel> mTravels;
     size_t mIterations;
+
+    std::vector<Travel> selectParents(const Population& p);
 };
 
 #endif
