@@ -122,16 +122,6 @@ void Travel::swap(const size_t numSwaps)
     }
 }
 
-bool Travel::operator < (const Travel& t) const
-{
-    return mFitness> t.mFitness;
-}
-
-bool Travel::operator > (const Travel& t) const
-{
-    return mFitness > t.mFitness;
-}
-
 void Travel::swapRandomCities()
 {
     if (mNumCities <= 1)
@@ -162,4 +152,14 @@ void Travel::swapRandomSalesmen()
         posB = rand() % mNumSalesmen;
     }
     std::swap(mSalesmen.at(posA), mSalesmen.at(posB));
+}
+
+bool Travel::operator < (const Travel& t) const
+{
+    return mFitness> t.mFitness;
+}
+
+bool Travel::operator > (const Travel& t) const
+{
+    return mFitness > t.mFitness;
 }

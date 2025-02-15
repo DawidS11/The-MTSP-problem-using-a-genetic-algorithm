@@ -285,4 +285,14 @@ std::vector<Travel> GA::selectParents(const Population& p)
     parents.push_back(travels[index2]);
 
     return parents;
-} 
+}
+
+void GA::mutation(Population& p, Travel& t) // change to probMutation
+{
+    bool mutate = (rand() % 99 + 1) <= p.getProbMutation();
+    if (mutate)
+    {
+        t.swapRandomCities();
+        t.swapRandomSalesmen();
+    }
+}

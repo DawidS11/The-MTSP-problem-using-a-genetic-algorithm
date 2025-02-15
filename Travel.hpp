@@ -35,6 +35,8 @@ public:
     void calculateDistance();
     void calculateFitness();
     void swap(const size_t numSwaps);
+    void swapRandomCities();
+    void swapRandomSalesmen();
 
     bool operator<(const Travel& t) const;
     bool operator>(const Travel& t) const;
@@ -46,9 +48,6 @@ private:
     std::vector<int> mSalesmen;
     double mDistance;
     double mFitness;
-
-    void swapRandomCities();
-    void swapRandomSalesmen();
 };
 
 #endif
