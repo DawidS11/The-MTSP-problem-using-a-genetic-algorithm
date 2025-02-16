@@ -54,23 +54,18 @@ size_t Population::getSize() const
     return mPopulationSize;
 }
 
-double Population::getBestDistance()
+double Population::getBestDistance() const
 {
-    return getBestTravel().getDistance();
-}
-
-Travel Population::getBestTravel()
-{
-    Travel bestTravel;
-    double bestFitness = 0.0;
+    double bestDistance = 1000000.0;
     for (auto it = travels.begin(); it != travels.end(); ++it)
     {
-        if (bestFitness <= it->getDistance())
+        if (bestDistance > it->getDistance())
         {
-            bestTravel = *it;
+            bestDistance = it->getDistance();
         }
     }
-    return bestTravel;
+
+    return bestDistance;
 }
 
 void Population::setTravels(const std::vector<Travel> travels)

@@ -31,5 +31,5 @@ int main()
 
     Population population(cities, populationSize, numCities, numSalesmen);
     GA ga(population, 1000);
-    ga.optimization(population, 0);
+    ga.optimization(population, 1);
 }

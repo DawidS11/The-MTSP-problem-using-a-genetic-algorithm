@@ -296,9 +296,12 @@ void GA::mutation(Population& p, Travel& t) // change to probMutation
 }
 
 void GA::evolution(Population& p, int crossover)
-{        
+{
+    std::cout << "AAA0";
     std::array<Travel, 2> parents(selectParents(p));
+    std::cout << "AAA0";
     std::vector<Travel> travels(p.getTravels());
+    std::cout << "AAA0";
     size_t populationSize = p.getSize();
     int r = rand() % populationSize;
     int r2 = rand() % populationSize;
@@ -314,14 +317,18 @@ void GA::evolution(Population& p, int crossover)
     }
     else
     {
+        std::cout << "AAA1";
         travels[r] = crossoverStandard(parents[0], parents[1]);
         travels[r2] = crossoverStandard(parents[0], parents[1]);
     }
 
     mutation(p, travels[r]);
     mutation(p, travels[r2]);
+    std::cout << "AAA1";
     travels[r].calculateDistance();
+    std::cout << "AAA1";
     travels[r].calculateFitness();
+    std::cout << "AAA1";
     travels[r2].calculateDistance();
     travels[r2].calculateFitness();
     p.setTravels(travels);
@@ -329,12 +336,13 @@ void GA::evolution(Population& p, int crossover)
 
 void GA::optimization(Population& p, int crossover)
 {
-    std::cout << "Starting shortest distance: " <<
-        p.getBestDistance() << std::endl;
+    std::cout << "Starting shortest distance: " << p.getBestDistance() << std::endl;
     std::cout << "============================================\n";
 
+    std::cout << "PPP";
     for (size_t i = 0; i < mIterations; ++i)
     {
+        std::cout << "XXX";
         evolution(p, crossover);
         if (i == 99 || i == 499 || i == 999)
         {
