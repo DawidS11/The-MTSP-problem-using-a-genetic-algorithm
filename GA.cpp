@@ -24,7 +24,7 @@ Travel GA::crossoverCarterAndRagsdale2006(Travel& t1, Travel& t2)
     while (childCities.size() < r)
     {
         auto it = std::find(momsPart.begin(), momsPart.end(), dadsCities[idx]);
-        if(it == momsPart.end())
+        if (it == momsPart.end())
         {
             childCities.push_back(dadsCities[idx]);
         }
@@ -36,7 +36,7 @@ Travel GA::crossoverCarterAndRagsdale2006(Travel& t1, Travel& t2)
     while (childCities.size() < numCities)
     {
         auto it = std::find(childCities.begin(), childCities.end(), dadsCities[idx]);
-        if(it == childCities.end())
+        if (it == childCities.end())
         {
             childCities.push_back(dadsCities[idx]);
         }
@@ -79,7 +79,7 @@ Travel GA::crossoverStandard(Travel& t1, Travel& t2)
     while (childCities.size() < numCities)
     {
         auto it = std::find(childCities.begin(), childCities.end(), dadsCities[idx]);
-        if(it == childCities.end())
+        if (it == childCities.end())
         {
             childCities.push_back(dadsCities[idx]);
         }
@@ -151,14 +151,14 @@ Travel GA::crossoverTCX(Travel& t1, Travel& t2)
     {
         segment[i] = rand() % momsSalesmen[i] + 1;
         segSum += segment[i];
-        while(segSum + numSalesmen - i - 1 > numCities)
+        while (segSum + numSalesmen - i - 1 > numCities)
         {
             segSum -= segment[i];
             segment[i] = rand() % momsSalesmen[i] + 1;
             segSum += segment[i];
         }
 
-        if(momsSalesmen[i] > segment[i])
+        if (momsSalesmen[i] > segment[i])
         {
             starting[i] = rand() % (momsSalesmen[i] - segment[i]) + index;
             for (k = starting[i]; k < starting[i] + segment[i]; ++k)
@@ -183,14 +183,14 @@ Travel GA::crossoverTCX(Travel& t1, Travel& t2)
     for (i = 0; i < numCities; ++i)
     {                                              
         it = std::find(savedGenesPool.begin(), savedGenesPool.end(), momsCities[i]);
-        if(it == savedGenesPool.end()) 
+        if (it == savedGenesPool.end()) 
             unsavedGenesPool.push_back(momsCities[i]);
     }
 
     for (k = 0; k < numCities; ++k)
     {
         for (i = 0; i < totalUnsavedGenes; ++i {
-            if(unsavedGenesPool[i] == dadsCities[k]) {
+            if (unsavedGenesPool[i] == dadsCities[k]) {
                 unsavedGenesPool2.push_back(unsavedGenesPool[i]);
                 break;
             }
@@ -200,8 +200,8 @@ Travel GA::crossoverTCX(Travel& t1, Travel& t2)
     segSum = 0;
     for (i = 0; i < numSalesmen; ++i)
     {
-        if(i != numSalesmen - 1) {
-            if(segSum == totalUnsavedGenes)
+        if (i != numSalesmen - 1) {
+            if (segSum == totalUnsavedGenes)
                 segment2[i] = 0;
             else
                 segment2[i] = rand() % (totalUnsavedGenes - segSum) + 1;
@@ -256,7 +256,7 @@ std::array<Travel, 2> GA::selectParents(const Population& p)
     double r = (double)rand() / RAND_MAX;
     double r2 = 1 - r;
     index = 0;
-    while(offset > r && index < p.getSize() - 1)
+    while (offset > r && index < p.getSize() - 1)
     {
         offset += probability[index];
         ++index;
@@ -264,14 +264,14 @@ std::array<Travel, 2> GA::selectParents(const Population& p)
     parents[0] = travels[index];
     index2 = 0;
     offset = 0.0;
-    while(offset > r2 && index2 < p.getSize() - 1)
+    while (offset > r2 && index2 < p.getSize() - 1)
     {
         offset += probability[index2];
         ++index2;
     }
-    if(index == index2)
+    if (index == index2)
     {
-        if(index2 > 0)
+        if (index2 > 0)
         {
             --index2;
         }
@@ -302,12 +302,12 @@ void GA::evolution(Population& p, int crossover)
     size_t populationSize = p.getSize();
     int r = rand() % populationSize;
     int r2 = rand() % populationSize;
-    while(r == r2)
+    while (r == r2)
     {
         r2 = rand() % populationSize;
     }
     
-    if(crossover == 0)
+    if (crossover == 0)
     {
         travels[r] = crossoverTCX(parents[0], parents[1]);
         travels[r2] = crossoverTCX(parents[0], parents[1]);
@@ -333,10 +333,10 @@ void GA::optimization(Population& p, int crossover)
         p.getBestDistance() << std::endl;
     std::cout << "============================================\n";
 
-    for(size_t i = 0; i < mIterations; i++)
+    for (size_t i = 0; i < mIterations; ++i)
     {
         evolution(p, crossover);
-        if(i == 99 || i == 499 || i == 999)
+        if (i == 99 || i == 499 || i == 999)
         {
             std::cout << "\nShortest distance after " << i + 1 << " iterations: " << p.getBestDistance() << std::endl;
             p.delNumMutation();

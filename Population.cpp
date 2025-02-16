@@ -85,7 +85,8 @@ int Population::getNumMutation()
 
 void Population::incNumMutation()
 {
-    mNumMutation++; setProbMutation();
+    ++mNumMutation;
+    setProbMutation();
 }
 
 void Population::delNumMutation()
