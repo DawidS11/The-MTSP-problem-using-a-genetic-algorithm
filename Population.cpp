@@ -28,7 +28,7 @@ Population::Population(const std::vector<Travel::City> cities, size_t population
         travel.swap(swapsNumber);
         travel.calculateDistance();
         travel.calculateFitness();
-        travels.push_back(travel);
+        mTravels.push_back(travel);
      }
 }
 
@@ -39,14 +39,14 @@ Population::Population()
 Population::Population(Population& p)
 {
     mPopulationSize = p.mPopulationSize;
-    travels = p.travels;
+    mTravels = p.mTravels;
     mNumMutation = p.mNumMutation;
     mProbMutation = p.mProbMutation;
 }
 
 std::vector<Travel> Population::getTravels() const
 { 
-    return travels;
+    return mTravels;
 }
 
 size_t Population::getSize() const
@@ -57,7 +57,7 @@ size_t Population::getSize() const
 double Population::getBestDistance() const
 {
     double bestDistance = 1000000.0;
-    for (auto it = travels.begin(); it != travels.end(); ++it)
+    for (auto it = mTravels.begin(); it != mTravels.end(); ++it)
     {
         if (bestDistance > it->getDistance())
         {
@@ -68,9 +68,9 @@ double Population::getBestDistance() const
     return bestDistance;
 }
 
-void Population::setTravels(const std::vector<Travel> travels)
+void Population::setTravels(const std::vector<Travel>& travels)
 {
-    Population::travels = travels;
+    mTravels = travels;
 }
 
 int Population::getNumMutation()
@@ -110,7 +110,7 @@ int Population:: getProbMutation()
 
 Population& Population::operator = (Population& p)
 {
-    travels = p.travels;
+    mTravels = p.mTravels;
     mNumMutation = p.mNumMutation;
     mProbMutation = p.mProbMutation;
     return *this;

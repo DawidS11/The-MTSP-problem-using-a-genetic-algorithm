@@ -14,7 +14,7 @@ public:
     std::vector<Travel> getTravels() const;
     size_t getSize() const;
     double getBestDistance() const;
-    void setTravels(const std::vector<Travel> travels);
+    void setTravels(const std::vector<Travel>& travels);
     int getNumMutation();
     void incNumMutation();
     void delNumMutation();
@@ -25,7 +25,7 @@ public:
 private:
     constexpr static size_t swapsNumber = 100;
     size_t mPopulationSize;
-    std::vector<Travel> travels;
+    std::vector<Travel> mTravels;
     size_t mNumMutation;
     int mProbMutation;
 };

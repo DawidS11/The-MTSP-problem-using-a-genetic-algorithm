@@ -12,9 +12,12 @@ public:
     struct City
     {
         City(int id, int x, int y);
+        City();
+        City(City& c);
+        City(City const& c);
         double calculateDistance(const City& c) const;
         bool operator == (const City& c) const;
-        //bool operator = (const City& c);
+        City& operator = (const City& c);
 
         int id;
         int x, y;
@@ -23,6 +26,8 @@ public:
 
     Travel(size_t numCities, size_t numSalesmen, const std::vector<City>& cities, const std::vector<int>& salesmen);
     Travel();
+    Travel(Travel const& t);
+    ~Travel() = default;
 
     double getDistance() const;
     double getFitness() const;
@@ -40,6 +45,7 @@ public:
 
     bool operator<(const Travel& t) const;
     bool operator>(const Travel& t) const;
+    Travel& operator = (const Travel& t);
 
 private:
     size_t mNumCities;

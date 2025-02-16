@@ -15,7 +15,19 @@ int getRandomInt(const int a, const int b)
 }
 
 Travel::City::City(int id, int x, int y)
-    : id(id), x(x), y(y) 
+    : id(id), x(x), y(y)
+{}
+
+Travel::City::City()
+    : id(0), x(0), y(0)
+{}
+
+Travel::City::City(City& c)
+    : id(c.id), x(c.x), y(c.y)
+{}
+
+Travel::City::City(City const& c)
+    : id(c.id), x(c.x), y(c.y)
 {}
 
 double Travel::City::calculateDistance(const City& c) const
@@ -30,12 +42,13 @@ bool Travel::City::operator == (const City& c) const
     return (id == c.id);
 }
 
-/*bool Travel::City::operator = (const City& c)
+Travel::City& Travel::City::operator = (const City& c)
 {
-    id == c.id;
+    id = c.id;
     x = c.x;
     y = c.y;
-}*/
+    return *this;
+}
 
 Travel::Travel(size_t numCities, size_t numSalesmen, const std::vector<City>& cities, const std::vector<int>& salesmen)
     : mNumCities(numCities), mNumSalesmen(numSalesmen), mCities(cities), mSalesmen(salesmen)
@@ -44,6 +57,18 @@ Travel::Travel(size_t numCities, size_t numSalesmen, const std::vector<City>& ci
 Travel::Travel()
     : mNumCities(0), mNumSalesmen(0), mCities(std::vector<City>()), mSalesmen(std::vector<int>())
 {}
+
+Travel::Travel(Travel const& t) 
+    : mCities(t.mCities), mSalesmen(t.mSalesmen), mDistance(t.mDistance), mFitness(t.mFitness)
+{}
+
+/*Travel::Travel(Travel&& t) 
+    : mCities(std::move(t.mCities)), mSalesmen(std::move(t.mSalesmen)), mDistance(t.mDistance), mFitness(t.mFitness)
+{}*/
+
+/*Travel::Travel(Travel t) 
+    : mCities(t.mCities), mSalesmen(t.mSalesmen), mDistance(t.mDistance), mFitness(t.mFitness)
+{}*/
 
 double Travel::getDistance() const
 {
@@ -162,4 +187,15 @@ bool Travel::operator < (const Travel& t) const
 bool Travel::operator > (const Travel& t) const
 {
     return mFitness > t.mFitness;
+}
+
+Travel& Travel::operator = (const Travel& t)
+{
+    mNumCities = t.mNumCities;
+    mNumSalesmen = t.mNumSalesmen;
+    mCities = t.mCities;
+    mSalesmen = t.mSalesmen;
+    mDistance = t.mDistance;
+    mFitness = t.mFitness;
+    return *this;
 }
