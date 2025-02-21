@@ -242,45 +242,50 @@ std::array<Travel, 2> GA::selectParents(const Population& p)
     // Sort so the best ones are at the beginning.
     std::sort(travels.begin(), travels.end());
 
-    double totalFitness = 0.0;
+    double sumFitness = 0.0;
+    double tmpSumFitness = 0.0;
     double offset = 0.0;
     size_t index = 0, index2 = 0;
     for (const Travel& travel : travels)
     {
-        totalFitness += travel.getFitness();
-    }
-    for (const Travel& travel : travels)
-    {
-        probability.push_back(travel.getFitness() / totalFitness);
+        sumFitness += travel.getFitness();
     }
 
-    double r = (double)rand() / RAND_MAX;
-    double r2 = 1 - r;
-    index = 0;
-    while (offset > r && index < p.getSize() - 1)
+    double r = getRandomDouble(0.0, sumFitness);
+    for (const Travel& travel : travels)
     {
-        offset += probability[index];
+        tmpSumFitness += travel.getFitness();
+        if (tmpSumFitness >= r)
+        {
+            break;
+        }
         ++index;
     }
-    parents[0] = travels[index];
-    index2 = 0;
-    offset = 0.0;
-    while (offset > r2 && index2 < p.getSize() - 1)
+
+    tmpSumFitness = 0.0;
+    r = getRandomDouble(0.0, sumFitness);
+    for (const Travel& travel : travels)
     {
-        offset += probability[index2];
+        tmpSumFitness += travel.getFitness();
+        if (tmpSumFitness >= r)
+        {
+            break;
+        }
         ++index2;
     }
+
     if (index == index2)
     {
-        if (index2 > 0)
-        {
-            --index2;
-        }
-        else
+        if (index2 == 0)
         {
             ++index2;
         }
+        else
+        {
+            --index2;
+        }
     }
+    parents[0] = travels[index];
     parents[1] = travels[index2];
 
     return parents;
