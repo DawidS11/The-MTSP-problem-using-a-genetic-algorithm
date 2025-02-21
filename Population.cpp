@@ -9,9 +9,9 @@ Population::Population(const std::vector<Travel::City> cities, size_t population
     std::random_device rd;
     std::mt19937 gen(rd());
 
-    std::vector<int> salesmen;
     for (size_t populationIndex = 0; populationIndex < populationSize; ++populationIndex)
     {
+        std::vector<int> salesmen;
         int remainingCities = numCities;
         int remainingSalesmen = numSalesmen;
         for (size_t salesmanIndex = 0; salesmanIndex < numSalesmen - 1; ++salesmanIndex)
