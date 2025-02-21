@@ -59,7 +59,7 @@ Travel::Travel()
 {}
 
 Travel::Travel(Travel const& t) 
-    : mCities(t.mCities), mSalesmen(t.mSalesmen), mDistance(t.mDistance), mFitness(t.mFitness)
+    : mNumCities(t.mNumCities), mNumSalesmen(t.mNumSalesmen), mCities(t.mCities), mSalesmen(t.mSalesmen), mDistance(t.mDistance), mFitness(t.mFitness)
 {}
 
 /*Travel::Travel(Travel&& t) 

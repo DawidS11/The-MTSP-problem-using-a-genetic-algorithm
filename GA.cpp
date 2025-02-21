@@ -73,8 +73,9 @@ Travel GA::crossoverStandard(Travel& t1, Travel& t2)
     size_t numCities = t1.getNumCities();
 
     size_t r = rand() % (numCities - 1) + 1;
-    std::vector<Travel::City> childCities(momsCities.begin(), momsCities.begin() + r);
-    
+    std::vector<Travel::City> childCities(r);
+    std::copy_n(momsCities.begin(), r-1, childCities.begin());
+    return Travel();
     size_t idx = 0;
     while (childCities.size() < numCities)
     {
@@ -314,7 +315,6 @@ void GA::evolution(Population& p, int crossover)
     }
     else
     {
-        std::cout << "AAA1";
         travels[r] = crossoverStandard(parents[0], parents[1]);
         travels[r2] = crossoverStandard(parents[0], parents[1]);
     }
@@ -333,11 +333,8 @@ void GA::optimization(Population& p, int crossover)
     std::cout << "Starting shortest distance: " << p.getBestDistance() << std::endl;
     std::cout << "============================================\n";
 
-    std::cout << "PPP";
-
     for (size_t i = 0; i < mIterations; ++i)
     {
-        std::cout << "XXX";
         evolution(p, crossover);
         if (i == 99 || i == 499 || i == 999)
         {

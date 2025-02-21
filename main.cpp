@@ -29,7 +29,7 @@ int main()
     }
     file.close();
 
-    Population population(cities, populationSize, numCities, numSalesmen);
-    GA ga(population, 1000);
-    ga.optimization(population, 1);
+    Population* population = new Population(cities, populationSize, numCities, numSalesmen);
+    GA ga(*population, 1000);
+    ga.optimization(*population, 1);
 }
