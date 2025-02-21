@@ -5,7 +5,7 @@
 #include <vector>
 
 int getRandomInt(const int a, const int b);
-getRandomDouble(const double a, const double b);
+double getRandomDouble(const double a, const double b);
 
 class Travel
 {
