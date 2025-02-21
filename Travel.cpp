@@ -14,6 +14,15 @@ int getRandomInt(const int a, const int b)
     return dist(gen);
 }
 
+double getRandomDouble(const double a, const double b)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<double> dist(a, b);
+
+    return dist(gen);
+}
+
 Travel::City::City(int id, int x, int y)
     : id(id), x(x), y(y)
 {}
