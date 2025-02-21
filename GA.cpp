@@ -74,8 +74,8 @@ Travel GA::crossoverStandard(Travel& t1, Travel& t2)
 
     size_t r = rand() % (numCities - 1) + 1;
     std::vector<Travel::City> childCities(r);
-    std::copy_n(momsCities.begin(), r-1, childCities.begin());
-    return Travel();
+    std::copy_n(momsCities.begin(), r, childCities.begin());
+
     size_t idx = 0;
     while (childCities.size() < numCities)
     {
