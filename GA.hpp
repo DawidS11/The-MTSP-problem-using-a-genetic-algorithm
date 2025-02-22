@@ -23,8 +23,8 @@ private:
      * Rank-based roulette-wheel.
      */
     std::array<Travel, 2> selectParents(const Population& p);
-    
-    void mutation(Population& p, Travel& t);
+
+    void mutation(const int probMutation, Travel& t);
     void evolution(Population& p, int crossover);
 };
 

@@ -291,9 +291,9 @@ std::array<Travel, 2> GA::selectParents(const Population& p)
     return parents;
 }
 
-void GA::mutation(Population& p, Travel& t) // change to probMutation
+void GA::mutation(const int probMutation, Travel& t)
 {
-    bool mutate = (rand() % 99 + 1) <= p.getProbMutation();
+    bool mutate = (rand() % 99 + 1) <= probMutation;
     if (mutate)
     {
         t.swapRandomCities();
@@ -324,8 +324,8 @@ void GA::evolution(Population& p, int crossover)
         travels[r2] = crossoverStandard(parents[0], parents[1]);
     }
 
-    mutation(p, travels[r]);
-    mutation(p, travels[r2]);
+    mutation(p.getProbMutation(), travels[r]);
+    mutation(p.getProbMutation(), travels[r2]);
     travels[r].calculateDistance();
     travels[r].calculateFitness();
     travels[r2].calculateDistance();
