@@ -67,17 +67,17 @@ Travel::Travel()
     : mNumCities(0), mNumSalesmen(0), mCities(std::vector<City>()), mSalesmen(std::vector<int>())
 {}
 
-Travel::Travel(Travel const& t) 
+/*Travel::Travel(Travel const& t) 
     : mNumCities(t.mNumCities), mNumSalesmen(t.mNumSalesmen), mCities(t.mCities), mSalesmen(t.mSalesmen), mDistance(t.mDistance), mFitness(t.mFitness)
 {}
-
+*/
 /*Travel::Travel(Travel&& t) 
     : mCities(std::move(t.mCities)), mSalesmen(std::move(t.mSalesmen)), mDistance(t.mDistance), mFitness(t.mFitness)
 {}*/
 
-/*Travel::Travel(Travel t) 
-    : mCities(t.mCities), mSalesmen(t.mSalesmen), mDistance(t.mDistance), mFitness(t.mFitness)
-{}*/
+Travel::Travel(const Travel& t)
+    : mNumCities(t.mNumCities), mNumSalesmen(t.mNumSalesmen), mCities(t.mCities), mSalesmen(t.mSalesmen), mDistance(t.mDistance), mFitness(t.mFitness)
+{}
 
 double Travel::getDistance() const
 {
@@ -111,11 +111,13 @@ std::vector<int> Travel::getSalesmen() const
 
 void Travel::setCities(const std::vector<Travel::City>& cities)
 {
+    mNumCities = cities.size();
     mCities = cities;
 }
 
 void Travel::setSalesmen(const std::vector<int>& salesmen)
 {
+    mNumSalesmen = salesmen.size();
     mSalesmen = salesmen;
 }
 

@@ -5,6 +5,41 @@ GA::GA(Population& population, size_t iterations)
     : mPopulation(population), mIterations(iterations)
 {}
 
+Travel GA::crossoverStandard(Travel& t1, Travel& t2)
+{
+    std::vector<Travel::City> momsCities = t1.getCities();
+    std::vector<Travel::City> dadsCities = t2.getCities();
+    std::vector<int> momsSalesmen = t1.getSalesmen();
+    std::vector<int> dadsSalesmen = t2.getSalesmen();
+
+    Travel child;
+    size_t numCities = t1.getNumCities();
+
+    size_t r = rand() % (numCities - 1) + 1;
+    std::vector<Travel::City> childCities(r);
+    std::copy_n(momsCities.begin(), r, childCities.begin());
+
+    size_t idx = 0;
+    while (childCities.size() < numCities)
+    {
+        auto it = std::find(childCities.begin(), childCities.end(), dadsCities[idx]);
+        if (it == childCities.end())
+        {
+            childCities.push_back(dadsCities[idx]);
+        }
+        ++idx;
+    }
+
+    std::vector<int> childSalesmen = rand() % 2 ? momsSalesmen : dadsSalesmen;
+
+    child.setCities(childCities);
+    child.setSalesmen(childSalesmen);
+    child.calculateFitness();
+    child.calculateDistance();
+
+    return child;
+}
+
 Travel GA::crossoverCarterAndRagsdale2006(Travel& t1, Travel& t2)
 {
     std::vector<Travel::City> momsCities = t1.getCities();
@@ -53,41 +88,6 @@ Travel GA::crossoverCarterAndRagsdale2006(Travel& t1, Travel& t2)
     {
         childSalesmen.push_back(momsSalesmen[i]);
     }
-
-    child.setCities(childCities);
-    child.setSalesmen(childSalesmen);
-    child.calculateFitness();
-    child.calculateDistance();
-
-    return child;
-}
-
-Travel GA::crossoverStandard(Travel& t1, Travel& t2)
-{
-    std::vector<Travel::City> momsCities = t1.getCities();
-    std::vector<Travel::City> dadsCities = t2.getCities();
-    std::vector<int> momsSalesmen = t1.getSalesmen();
-    std::vector<int> dadsSalesmen = t2.getSalesmen();
-
-    Travel child;
-    size_t numCities = t1.getNumCities();
-
-    size_t r = rand() % (numCities - 1) + 1;
-    std::vector<Travel::City> childCities(r);
-    std::copy_n(momsCities.begin(), r, childCities.begin());
-
-    size_t idx = 0;
-    while (childCities.size() < numCities)
-    {
-        auto it = std::find(childCities.begin(), childCities.end(), dadsCities[idx]);
-        if (it == childCities.end())
-        {
-            childCities.push_back(dadsCities[idx]);
-        }
-        ++idx;
-    }
-
-    std::vector<int> childSalesmen = rand() % 2 ? momsSalesmen : dadsSalesmen;
 
     child.setCities(childCities);
     child.setSalesmen(childSalesmen);
@@ -301,7 +301,7 @@ void GA::mutation(const int probMutation, Travel& t)
     }
 }
 
-void GA::evolution(Population& p, int crossover)
+void GA::evolution(Population& p, CROSSOVER crossover)
 {
     std::array<Travel, 2> parents(selectParents(p));
     std::vector<Travel> travels(p.getTravels());
@@ -313,15 +313,20 @@ void GA::evolution(Population& p, int crossover)
         r2 = rand() % populationSize;
     }
     
-    if (crossover == 0)
-    {
-        travels[r] = crossoverTCX(parents[0], parents[1]);
-        travels[r2] = crossoverTCX(parents[0], parents[1]);
-    }
-    else
+    if (crossover == CROSSOVER::STANDARD)
     {
         travels[r] = crossoverStandard(parents[0], parents[1]);
         travels[r2] = crossoverStandard(parents[0], parents[1]);
+    }
+    else if (crossover == CROSSOVER::CAR2006)
+    {
+        travels[r] = crossoverCarterAndRagsdale2006(parents[0], parents[1]);
+        travels[r2] = crossoverCarterAndRagsdale2006(parents[0], parents[1]);
+    }
+    else if (crossover == CROSSOVER::TCX)
+    {
+        travels[r] = crossoverTCX(parents[0], parents[1]);
+        travels[r2] = crossoverTCX(parents[0], parents[1]);
     }
 
     mutation(p.getProbMutation(), travels[r]);
@@ -333,8 +338,22 @@ void GA::evolution(Population& p, int crossover)
     p.setTravels(travels);
 }
 
-void GA::optimization(Population& p, int crossover)
+void GA::optimization(Population& p, CROSSOVER crossover)
 {
+    std::cout << "CROSSOVER ";
+    if (crossover == CROSSOVER::STANDARD)
+    {
+        std::cout << "standard\n";
+    }
+    else if (crossover == CROSSOVER::CAR2006)
+    {
+        std::cout << "Carter And Ragsdale 2006\n";
+    }
+    else if (crossover == CROSSOVER::TCX)
+    {
+        std::cout << "tcx\n";
+    }
+    
     std::cout << "Starting shortest distance: " << p.getBestDistance() << std::endl;
     std::cout << "============================================\n";
 
@@ -348,5 +367,5 @@ void GA::optimization(Population& p, int crossover)
         }
     }
 
-    std::cout << "\n============================================" << std::endl;
+    std::cout << "\n============================================\n\n";
 }

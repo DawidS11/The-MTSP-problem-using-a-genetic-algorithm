@@ -1,9 +1,12 @@
 #include <iostream>
 #include <fstream>
+#include <ctime>
 #include "GA.hpp"
 
 int main()
 {
+    srand(time(0));
+
     size_t populationSize;
     size_t numCities;
     size_t numSalesmen;
@@ -31,5 +34,7 @@ int main()
 
     Population* population = new Population(cities, populationSize, numCities, numSalesmen);
     GA ga(*population, 1000);
-    ga.optimization(*population, 1);
+    ga.optimization(*population, CROSSOVER::STANDARD);
+    ga.optimization(*population, CROSSOVER::CAR2006);
+    ga.optimization(*population, CROSSOVER::TCX);
 }

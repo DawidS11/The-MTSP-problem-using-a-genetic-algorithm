@@ -27,7 +27,8 @@ public:
 
     Travel(size_t numCities, size_t numSalesmen, const std::vector<City>& cities, const std::vector<int>& salesmen);
     Travel();
-    Travel(Travel const& t);
+    //Travel(Travel const& t);
+    Travel(const Travel& t);
     ~Travel() = default;
 
     double getDistance() const;
