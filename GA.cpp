@@ -80,11 +80,11 @@ Travel GA::crossoverCarterAndRagsdale2006(Travel& t1, Travel& t2)
 
     r = rand() % numSalesmen;
     std::vector<int> childSalesmen;
-    for (size_t i = r+1; i >= 0; --i)
+    for (int i = r; i >= 0; --i)
     {
         childSalesmen.push_back(momsSalesmen[i]);
     }
-    for (size_t i = numSalesmen-1; i >= r+1; --i)
+    for (int i = numSalesmen-1; i >= r+1; --i)
     {
         childSalesmen.push_back(momsSalesmen[i]);
     }
